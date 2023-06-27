@@ -83,7 +83,7 @@ Verify that it is just a shell script that just creates the `/tmp/udhcpd.pid` fi
 ## 6
 Kill the telnet server since that is a big vulernability
 ```bash
-killall telnetd
+killall -9 telnetd
 ```
 
 ## Done
