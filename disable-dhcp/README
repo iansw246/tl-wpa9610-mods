@@ -51,15 +51,12 @@ Invoke-WebRequest -UseBasicParsing -Uri "http://$powerlineUrl/admin/powerline?fo
 
 This exploits a command injection vulnerability in the http server code on the powerline to start a telnet server.
 
-4. Run `payload.sh` on the powerline via telnet by running on your local machine
-```bash
-(cat load-payload.sh; sleep 15) | telnet $powerline_url
-```
+4. Run `payload.sh` on the powerline via telnet by running on your local machine `upload-payload.sh`
 
-Read the output and make there aren't any major errors.
+Read the output and make there aren't any errors.
 
 If you don't see any output, try increasing the sleep time higher than 15.
-If the payload was interrupted, you may need to undo its partially changes before rerunning the script. I should document how to do that.
+If the payload was interrupted or already run before, you may need to undo its partially changes before rerunning the script. I should document how to do that.
 
 (see https://unix.stackexchange.com/a/296161) for source of this command.
 
