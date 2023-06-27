@@ -21,4 +21,6 @@ killall udhcpd
 
 mount --bind "$hacked_sbin_path" /usr/sbin
 echo "\n\n\n"
+
+logx
 echo Done
