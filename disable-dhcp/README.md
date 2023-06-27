@@ -87,11 +87,12 @@ killall -9 telnetd
 ```
 
 ## Done
-And that's it. The DHCP server on the powerline should never start up. This process will need to be repeated each time the powerline is rebooted or loses power since this modifies only RAM and not the persistent firmware. A modified firmware could be created that disables the DHCP server permanently, but I'm scared of bricking my device, so I chose this route instead. This device doesn't appear to have any recovery mechanisms via TFTP like some routers.
+And that's it. The DHCP server on the powerline should never start up. This process will need to be repeated each time the powerline is rebooted or loses power.
 
 The script should leave two log entries in the "System Log": A "DHCP Client" log of level "INFO", and a "MAC-FILTER" log of level "ERROR". The script didn't actually to anything to the MAC filter. It is just a byproduct of logging.
 
 # Technical Details
+I could have modified the firmware instead of this solution. Doing so would make the changes persistent. The current solution modifies only RAM and not the firmware. I chose this method instead because I do not want to risk bricking my device; this device doesn't appear to have any recovery mechanisms via TFTP like some routers.
 The daemon LanSettingsd starts `/usr/sbin/udhcpd`, which is from `busybox`, under certain conditions.
 From reverse engineering via Ghidra, one condition triggering it is when LAN settings (IP address, subnet mask, etc.) are written to (changed) from the web, but I'm not very confident about that.
 
