@@ -2,7 +2,7 @@
 This disables the DHCP server, which breaks internet on networks with a primary DHCP server. See [this forum post on the TP-Link forums](https://community.tp-link.com/us/home/forum/topic/106148) for user complaints. TP-Link never updated the firmware on this model to add on option to disable the server.
 
 # Usage
-1. Log into pofwerline web interface/management page
+1. Log into powerline web interface/management page
 2. Note the url/ip address to the powerline and authorization cookie
 3. Send an authenticated HTTP POST request to `http://${powerline_url}/powerline?form=plc_device` with the following data. Alternatively, sent the request from your browser. Use either CURL, setting the shell script variables `powerline_url` and `authorization_cookie` to appropriate values:
 ```bash
@@ -49,7 +49,7 @@ Invoke-WebRequest -UseBasicParsing -Uri "http://$powerlineUrl/admin/powerline?fo
 -Body "operation=remove&key=1;telnetd -l /bin/sh"
 ```
 
-This exploits a command injection vulnerability in the http server code on the powerline to start a telnet server.
+This exploits a command injection vulnerability in the http server code on the powerline to start a telnet server. Thanks to [this blog post](https://the-hyperbolic.com/posts/hacking-the-tlwpa4220-part-1/) from the hyperbolic for a great writeup about the vulnerability.
 
 4. Run `payload.sh` on the powerline via telnet by running on your local machine `upload-payload.sh`
 
@@ -79,8 +79,8 @@ This device doesn't appear to have any recovery mechanisms via TFTP like some ro
 The daemon LanSettingsd starts `/usr/sbin/udhcpd`, which is from `busybox`, under certain conditions.
 From reverse engineering via Ghidra, one condition triggering it is when LAN settings (IP address, subnet mask, etc.) are written to (changed) from the web, but I'm not very confident about that.
 
-This solution overwrites the `udhcpd` executable with a shell script that returns immediately instead. The shell script also creates a `/tmp/udhcpd.pid` file because LanSettingsd appears to use that file to decide whether to try starting `udhcpd` again. There shouldn't be any impact of it starting `udhcpd` mulitple times, but it seems inefficient.
+This solution overwrites the `udhcpd` executable with a shell script that returns immediately instead. The shell script also creates a `/tmp/udhcpd.pid` file because LanSettingsd appears to use that file to decide whether to try starting `udhcpd` again. There shouldn't be any impact of it starting the modified `udhcpd` mulitple times, but it seems inefficient. See the function `FUN_00011070` in `LanSettingd`.
 
 The root filesystem is a squashfs which is read-only. To allow modifications, therefore, we bind mount a tmpfs (`/tmp/hacked_sbin`) over `/usr/sbin` and put a modfied copy of the original `/usr/sbin` into the tmpfs.
 
-I could also paste the entire command into the command injection rather than use telnet. I'm not sure if there's a character limit. In `httpd`, `execFormatCmd` appears to have a 2048 byte buffer, which might be a limit. 
+I could also paste the entire command into the command injection rather than use telnet. I'm not sure if there's a character limit. In `httpd`, `execFormatCmd` appears to have a 2048 byte buffer, which might be a limit.
