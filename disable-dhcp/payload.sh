@@ -8,6 +8,7 @@ do
     # The powerline system has no basename command
     basename="${f##*/}"
     # Copy file $f
+    # The powerline has no cp command
     cat "$f" > "$hacked_sbin_path"/"${basename}"
     chmod +x "$hacked_sbin_path"/"${basename}"
 done
