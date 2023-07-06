@@ -22,5 +22,7 @@ killall udhcpd
 mount --bind "$hacked_sbin_path" /usr/sbin
 echo "\n\n\n"
 
+# Create test log as log that this script ran
+# Creating custom log messages is complicated and might require using TP-Link's custom C library
 logx
 echo Done
