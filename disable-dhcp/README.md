@@ -81,7 +81,7 @@ cat /usr/sbin/udhcpd
 Verify that it is just a shell script that just creates the `/tmp/udhcpd.pid` file or something similar.
 
 ## 6
-Kill the telnet server since that is a big vulernability
+Kill the telnet server since that is a big vulnerability
 ```bash
 killall -9 telnetd
 ```
